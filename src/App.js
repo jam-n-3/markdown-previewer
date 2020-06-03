@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+const ReactMarkdown = require('react-markdown')
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '# Heading\n\n## Subheading\n\n[Link](https://example.com/)\n\n`let x = 0`\n' + 
+      ' \n```\n{"firstName": "John", "lastName": "Smith", "age": 25}\n```\n- List Item\n ' +
+      '\n> Quote\n\n![alt text for image](example.jpg)\n\n**Bold Text**'
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {this.setState({value: event.target.value});}
+
+  render() {
+    return (
+      <div className="App">
+        <textarea id="editor" onChange={this.handleChange} value={this.state.value} />
+        <p id="preview"><ReactMarkdown source={this.state.value} /></p>
+      </div>
+    );
+  }
 }
 
 export default App;
